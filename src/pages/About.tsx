@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import profilePic from '../assets/images/profile/joko_gedung2.jpg'
 import { motion, useInView, useMotionValue, animate } from 'framer-motion'
 import FlipText from '../components/ui/FlipText'
