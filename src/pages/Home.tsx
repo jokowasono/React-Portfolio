@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import profilePic from "../assets/images/profile/sedakep-nobg2.png";
 import { motion } from "framer-motion";
 import { Typewriter2 } from "@/components/ui/Typewriter2"
