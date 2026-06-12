@@ -1,4 +1,3 @@
-import React from 'react';
 import { cn } from '@/lib/utils';
 
 interface ShinyTextProps {
@@ -13,8 +12,8 @@ interface ShinyTextProps {
 export default function ShinyText2({ 
   text, 
   className = "", 
-  lightColors = ["#4d4d4d", "#B63E96", "#4d4d4d"],
-  darkColors = ["#6b6b6b", "#58E6D9", "#6b6b6b"],
+  // lightColors = ["#4d4d4d", "#B63E96", "#4d4d4d"],
+  // darkColors = ["#6b6b6b", "#58E6D9", "#6b6b6b"],
   colors, 
   speed = 3 
 }: ShinyTextProps) {

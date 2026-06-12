@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 interface TextSlideIn2Props {
@@ -14,20 +14,23 @@ export default function TextSlideIn2({
 }: TextSlideIn2Props) {
   const words = text.split(" ");
 
-  const container = {
+  const container: Variants = {
     hidden: { opacity: 0 },
-    visible: (i = 1) => ({
+    visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.12, delayChildren: delay * i },
-    }),
+      transition: { 
+        staggerChildren: 0.12, 
+        delayChildren: delay 
+      },
+    },
   };
 
-  const child = {
+  const child: Variants = {
     visible: {
       opacity: 1,
       y: 0,
       transition: {
-        type: "spring",
+        type: "spring" as const, // <-- wajib as const
         damping: 12,
         stiffness: 100,
       },
@@ -36,7 +39,7 @@ export default function TextSlideIn2({
       opacity: 0,
       y: 20,
       transition: {
-        type: "spring",
+        type: "spring" as const, // <-- ini juga
         damping: 12,
         stiffness: 100,
       },

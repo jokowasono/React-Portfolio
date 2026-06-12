@@ -13,8 +13,8 @@ const ScrambleText2 = ({ text, className = "", repeatDelay = 2000 }: ScrambleTex
     const [displayText, setDisplayText] = useState(text);
     const ref = useRef(null);
     const isInView = useInView(ref, { once: false }); // allow repeat when it re-enters
-    const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-    const intervalRef = useRef<NodeJS.Timeout | null>(null);
+    const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
     const scramble = useCallback(() => {
         // Clear any existing timers
