@@ -1,10 +1,13 @@
+// Layout.tsx
+import { lazy, Suspense } from 'react'
+import Home from './pages/Home' // Home jangan di-lazy biar FCP cepet
 import { Header } from './components/Header'
-import Home from './pages/Home' // ← ganti dari Hero
-import About from './pages/About'
-import Education from './pages/Education'
-import Skills from './pages/Skills'
-import Contact from './pages/Contact'
 import { Footer } from './components/Footer'
+
+const About = lazy(() => import('./pages/About'))
+const Education = lazy(() => import('./pages/Education'))
+const Skills = lazy(() => import('./pages/Skills'))
+const Contact = lazy(() => import('./pages/Contact'))
 
 export default function Layout() {
   return (
@@ -12,10 +15,12 @@ export default function Layout() {
       <Header />
       <main>
         <Home />
-        <About />
-        <Education />
-        <Skills />
-        <Contact />
+        <Suspense fallback={<div className="h-screen" />}>
+          <About />
+          <Education />
+          <Skills />
+          <Contact />
+        </Suspense>
       </main>
       <Footer/>
     </div>
