@@ -16,7 +16,7 @@ export default function Home() {
   return (
     <section
       id="home"
-      className="bg-white dark:bg-slate-900"
+      className="bg-white dark:bg-slate-900 md:pt-24 lg:pt-28"
     >
       {/* Globe Background */}
       <div className="absolute inset-0 flex items-center justify-center -z-10 overflow-hidden">
