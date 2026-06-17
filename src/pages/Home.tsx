@@ -1,48 +1,42 @@
-import { useEffect, useState, lazy, Suspense } from "react";
-import profilePic from "../assets/images/profile/sedakep-nobg2.webp";
-import { motion } from "framer-motion";
+import { useEffect, useState, lazy, Suspense } from "react"
+import profilePic from "../assets/images/profile/sedakep-nobg2.webp"
+import { motion } from "framer-motion"
 import { Typewriter2 } from "@/components/ui/Typewriter2"
-import { SimpleMagicButton } from "../components/ui/SimpleMagicButton";
+import { SimpleMagicButton } from "../components/ui/SimpleMagicButton"
 import { FaGithub, FaLinkedinIn } from 'react-icons/fa6'
 
-// Lazy load Globe biar nggak blocking initial render
-const GlobeBackground = lazy(() => import("@/components/ui/WorldGlobe"));
+const GlobeBackground = lazy(() => import("@/components/ui/WorldGlobe"))
 
-// Hook buat deteksi mobile
 const useIsMobile = () => {
-  const [isMobile, setIsMobile] = useState(true);
-
+  const [isMobile, setIsMobile] = useState(true)
   useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-
-  return isMobile;
+    const checkMobile = () => setIsMobile(window.innerWidth < 768)
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+  return isMobile
 }
 
 export default function Home() {
-  const [isMounted, setIsMounted] = useState(false);
-  const isMobile = useIsMobile();
+  const [isMounted, setIsMounted] = useState(false)
+  const isMobile = useIsMobile()
 
   useEffect(() => {
-    setIsMounted(true);
-  }, []);
+    setIsMounted(true)
+  }, [])
 
-  // Matikan animasi di mobile biar hemat TBT
-  const mobileAnimationProps = isMobile? { initial: false, animate: false } : {};
+  const mobileAnimationProps = isMobile? { initial: false, animate: false } : {}
 
   return (
     <section
       id="home"
-      className="bg-white dark:bg-slate-900 md:pt-24 lg:pt-28 relative"
+      className="bg-white dark:bg-slate-950 md:pt-24 lg:pt-28 relative"
     >
-      {/* Globe Background - cuma render di desktop >= 768px */}
       {!isMobile && (
         <Suspense fallback={null}>
           <div className="absolute inset-0 flex items-center justify-center -z-10 overflow-hidden">
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70vw] h-[70vh] opacity-20 dark:opacity-30">
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70vw] h-[70vh] opacity-10 dark:opacity-20">
               <GlobeBackground />
             </div>
           </div>
@@ -54,8 +48,9 @@ export default function Home() {
 
           {/* FOTO */}
           <div className="w-full max-w-xs xs:max-w-sm sm:max-w-md lg:w-2/5 relative flex justify-center items-center order-1 lg:order-1">
-            <div className="absolute bottom-0 w-[85%] xs:w-[90%] lg:w-full h-[65%] xs:h-[70%] rounded-2xl xs:rounded-3xl border-2 border-solid border-dark bg-gray-200 dark:bg-gray-900 overflow-visible">
-              <div className="absolute top-0 -right-2 xs:-right-3 -z-10 w-[102%] h-[103%] rounded-2xl xs:rounded-3xl bg-dark dark:bg-neutral-800" />
+            {/* FIX: bg-dark → bg-slate-200, border-dark → border-slate-900 */}
+            <div className="absolute bottom-0 w-[85%] xs:w-[90%] lg:w-full h-[65%] xs:h-[70%] rounded-2xl xs:rounded-3xl border-2 border-solid border-slate-900 bg-slate-200 dark:bg-slate-900 overflow-visible">
+              <div className="absolute top-0 -right-2 xs:-right-3 -z-10 w-[102%] h-[103%] rounded-2xl xs:rounded-3xl bg-slate-900 dark:bg-slate-700" />
             </div>
 
             <motion.div
@@ -87,7 +82,8 @@ export default function Home() {
           {/* TEKS */}
           <div className="w-full lg:w-1/2 flex flex-col items-center text-center lg:items-start lg:text-left order-2 lg:order-2 px-2">
 
-            <motion.p
+            {/* FIX: orange/yellow → slate. Nama harus netral */}
+            <motion.h1
               {...(isMobile?
                 { initial: false, animate: false } :
                 {
@@ -96,12 +92,13 @@ export default function Home() {
                   transition: { duration: 0.6, ease: "easeOut" }
                 }
               )}
-              className="text-2xl xs:text-3xl sm:text-4xl lg:text-4xl font-bold text-orange-500 dark:text-yellow-500 break-words leading-tight"
+              className="text-3xl xs:text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 dark:text-slate-100 break-words leading-tight"
             >
-              Hi, I'm Joko Wasono,
-            </motion.p>
+              Joko Wasono
+            </motion.h1>
 
-            <motion.p
+            {/* FIX: dark/70 → cyan-500. Ini 1 accent kamu */}
+            <motion.h2
               {...(isMobile?
                 { initial: false, animate: false } :
                 {
@@ -110,10 +107,10 @@ export default function Home() {
                   transition: { duration: 0.6, delay: 0.1, ease: "easeOut" }
                 }
               )}
-              className="text-lg xs:text-xl sm:text-2xl lg:text-3xl font-semibold text-dark/70 dark:text-neutral-300 mt-1 xs:mt-2 break-words"
+              className="text-xl xs:text-2xl sm:text-3xl lg:text-3xl font-semibold text-cyan-500 mt-2 break-words"
             >
-              a frontend developer
-            </motion.p>
+              Frontend Developer
+            </motion.h2>
 
             <motion.p
               {...(isMobile?
@@ -124,16 +121,16 @@ export default function Home() {
                   transition: { duration: 0.6, delay: 0.2, ease: "easeOut" }
                 }
               )}
-              className="my-4 lg:mb-10 xs:my-6 text-sm xs:text-base sm:text-lg text-dark/70 dark:text-neutral-400 max-w-xs xs:max-w-sm sm:max-w-xl break-words leading-relaxed"
+              className="my-4 lg:mb-10 xs:my-6 text-sm xs:text-base sm:text-lg text-slate-600 dark:text-slate-400 max-w-xs xs:max-w-sm sm:max-w-xl break-words leading-relaxed"
             >
               A dedicated Frontend Developer focused on transforming creative ideas into high-performance, innovative web applications.
             </motion.p>
 
             <div className="flex items-center justify-center lg:justify-start gap-1 xs:gap-2 mb-6 xs:mb-8 h-6 xs:h-8 w-full">
               {isMobile? (
-                // Mobile: teks biasa, nggak pake Typewriter biar hemat CPU
-                <p className="text-base xs:text-lg sm:text-xl lg:text-2xl font-bold font-inter text-cyan-600 dark:text-cyan-500 break-words">
-                  With <span className="text-green-600 dark:text-green-500 font-extrabold italic">Modern Tech</span> Stack
+                // FIX: green → cyan. 1 warna aja
+                <p className="text-base xs:text-lg sm:text-xl lg:text-2xl font-bold font-inter text-slate-700 dark:text-slate-300 break-words">
+                  With <span className="text-cyan-500 font-extrabold italic">Modern Tech</span> Stack
                 </p>
               ) : (
                 <Typewriter2
@@ -142,8 +139,8 @@ export default function Home() {
                   pause={2500}
                   delay={300}
                   highlightWords={["Modern", "Tech"]}
-                  highlightClass="text-green-600 dark:text-green-500 font-extrabold italic"
-                  className="text-base xs:text-lg sm:text-xl lg:text-2xl font-bold font-inter text-cyan-600 dark:text-cyan-500 break-words"
+                  highlightClass="text-cyan-500 font-extrabold italic"
+                  className="text-base xs:text-lg sm:text-xl lg:text-2xl font-bold font-inter text-slate-700 dark:text-slate-300 break-words"
                 />
               )}
             </div>
@@ -160,7 +157,7 @@ export default function Home() {
                 target="_blank"
                 whileHover={isMobile? {} : { scale: 1.1 }}
                 whileTap={isMobile? {} : { scale: 0.95 }}
-                className="w-12 h-12 rounded-xl bg-white/10 dark:bg-slate-800/50 md:backdrop-blur border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-700 dark:text-slate-300 hover:bg-slate-900 hover:text-white dark:hover:bg-white dark:hover:text-slate-900 transition-all"
+                className="w-12 h-12 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-700 dark:text-slate-300 hover:bg-slate-900 hover:text-white dark:hover:bg-slate-100 dark:hover:text-slate-900 transition-all"
               >
                 <FaGithub className="w-5 h-5" />
               </motion.a>
@@ -169,7 +166,7 @@ export default function Home() {
                 target="_blank"
                 whileHover={isMobile? {} : { scale: 1.1 }}
                 whileTap={isMobile? {} : { scale: 0.95 }}
-                className="w-12 h-12 rounded-xl bg-white/10 dark:bg-slate-800/50 md:backdrop-blur border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-700 dark:text-slate-300 hover:bg-blue-600 hover:text-white transition-all"
+                className="w-12 h-12 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-700 dark:text-slate-300 hover:bg-blue-600 hover:text-white transition-all"
               >
                 <FaLinkedinIn className="w-5 h-5" />
               </motion.a>
@@ -179,5 +176,5 @@ export default function Home() {
         </div>
       </div>
     </section>
-  );
+  )
 }

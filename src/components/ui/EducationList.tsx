@@ -1,19 +1,19 @@
-import { motion, useScroll } from "framer-motion"; // ✅ FIX 1: ganti dari 'motion/react'
-import { useRef } from "react";
-import { GraduationCap, School, BookOpen, Pencil } from "lucide-react";
+import { motion, useScroll } from "framer-motion"
+import { useRef } from "react"
+import { GraduationCap, School, BookOpen, Pencil } from "lucide-react"
 
 interface Education {
-  period: string;
-  school: string;
-  degree?: string;
-  address: string;
-  icon: React.ReactNode;
+  period: string
+  school: string
+  degree?: string
+  address: string
+  icon: React.ReactNode
 }
 
 const educationData: Education[] = [
   {
     period: "2018 — 2022",
-    school: "STIMIK-AKI SEMARANG",
+    school: "STMIK AKI Semarang",
     degree: "Bachelor of Computer Science",
     address: "Central Java, Indonesia",
     icon: <GraduationCap className="w-4 h-4" />,
@@ -39,78 +39,81 @@ const educationData: Education[] = [
     address: "Brebes, Central Java, Indonesia",
     icon: <Pencil className="w-4 h-4" />,
   },
-];
+]
 
 const EducationList = () => {
-  const ref = useRef(null);
+  const ref = useRef(null)
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "center start"]
-  });
+  })
 
   return (
-    <div className="max-w-3xl mx-auto py-8 px-6" ref={ref}>
+    <div className="max-w-3xl mx-auto py-4 px-6" ref={ref}>
       <div className="relative ml-3">
-        {/* ✅ FIX 2: w- jadi w-1 biar garis timeline keliatan */}
+        {/* TIMELINE: 1 warna cyan aja */}
         <motion.div
           style={{ scaleY: scrollYProgress }}
-          className="absolute left-0 top-0 w-1 h-full bg-gradient-to-b from-orange-400 to-green-600 origin-top"
+          className="absolute left-0 top-0 w-1 h-full bg-cyan-500 origin-top rounded-full"
         />
 
         {educationData.map((item, index) => (
           <motion.div
             key={index}
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.8 }}
-            transition={{ duration: 0.6, delay: index * 0.15, type: "spring" }}
-            className="mb-7 ml-8 relative"
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.6, delay: index * 0.1 }}
+            className="mb-8 ml-8 relative"
           >
-            {/* ✅ FIX 3: -left- jadi -left-12 + shadow + bg class */}
+            {/* ICON: Hapus rotate 360, cukup scale */}
             <motion.span
-              whileHover={{ scale: 1.2, rotate: 360 }}
-              transition={{ duration: 0.4 }}
+              whileHover={{ scale: 1.15 }}
+              transition={{ duration: 0.2 }}
               className="absolute -left-12 top-1.5 w-8 h-8 rounded-full
-                         bg-light dark:bg-dark
-                         border-2 border-orange-400 dark:border-green-600
-                         flex items-center justify-center text-orange-500 dark:text-green-400
-                         shadow-[0_0_15px_rgba(251,146,60,0.4)] dark:shadow-[0_0_15px_rgba(34,197,94,0.4)]"
+                         bg-white dark:bg-slate-900
+                         border-2 border-cyan-500
+                         flex items-center justify-center text-cyan-600 dark:text-cyan-400
+                         shadow-lg"
             >
               {item.icon}
             </motion.span>
 
+            {/* CARD: Hapus rotateX, cukup y doang */}
             <motion.div
               whileHover={{
-                y: -8,
-                rotateX: 5,
-                transition: { type: "spring", stiffness: 300 }
+                y: -4,
+                transition: { type: "spring", stiffness: 400 }
               }}
-              style={{ transformStyle: "preserve-3d" }}
               className="group relative p-6 rounded-2xl
-                         bg-light dark:bg-dark
-                         border border-black/10 dark:border-white/10
-                         hover:border-green-600 dark:hover:border-green-300
-                         shadow-lg hover:shadow-2xl transition-all duration-300"
+                         bg-slate-50 dark:bg-slate-900
+                         border border-slate-200 dark:border-slate-800
+                         hover:border-cyan-500 dark:hover:border-cyan-400
+                         shadow-md hover:shadow-xl transition-all duration-300"
             >
-              <div className="absolute left-0 top-0 h-full w-1 bg-gradient-to-b from-orange-400 to-green-600 rounded-l-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="absolute left-0 top-0 h-full w-1 bg-cyan-500 rounded-l-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
 
-              <h3 className="text-xl font-bold text-green-600 dark:text-[#34675c] mt-2">
+              {/* TEKS: 1 warna cyan + slate */}
+              <span className="text-sm font-medium text-cyan-600 dark:text-cyan-400">
+                {item.period}
+              </span>
+              <h3 className="text-xl font-bold text-slate-900 dark:text-slate-100 mt-1">
                 {item.school}
               </h3>
-              <h3 className="text-sm font-bold text-green-600 dark:text-[#34675c] mt-2">
-                {item.address}
-              </h3>
               {item.degree && (
-                <p className="text-yellow-600 dark:text-green-700 mt-2">
+                <p className="text-slate-600 dark:text-slate-400 mt-1">
                   {item.degree}
                 </p>
               )}
+              <p className="text-sm text-slate-500 dark:text-slate-500 mt-2">
+                {item.address}
+              </p>
             </motion.div>
           </motion.div>
         ))}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default EducationList;
+export default EducationList

@@ -1,214 +1,156 @@
-import { motion } from 'framer-motion';
-import { SiHtml5, SiTailwindcss, SiNextdotjs, SiReact, SiTypescript } from 'react-icons/si';
-import { useEffect, useState } from 'react';
+import { motion } from 'framer-motion'
+import { SiHtml5, SiTailwindcss, SiNextdotjs, SiReact, SiTypescript } from 'react-icons/si'
+import { useEffect, useState } from 'react'
 
-const MotionLogo = ({ size = 30, color = "#FACC15" }: { size?: number, color?: string }) => (
-    <svg width={size} height={size} viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M10 80L27 35H42L25 80H10Z" fill={color} />
-        <path d="M31 80L48 35H63L46 80H31Z" fill={color} />
-        <path d="M52 80L69 35H84L67 80H52Z" fill={color} />
-        <circle cx="88" cy="42" r="8" fill={color} />
-    </svg>
-);
+const MotionLogo = ({ size = 30 }: { size?: number }) => (
+  <svg width={size} height={size} viewBox="0 0 100 100" fill="none">
+    <path d="M10 80L27 35H42L25 80H10Z" fill="currentColor" />
+    <path d="M31 80L48 35H63L46 80H31Z" fill="currentColor" />
+    <path d="M52 80L69 35H84L67 80H52Z" fill="currentColor" />
+    <circle cx="88" cy="42" r="8" fill="currentColor" />
+  </svg>
+)
+
+// STATIC: Grayscale semua, ga pake warna brand
+const StaticOrbit = () => (
+  <div className="w-full max-w-md mx-auto px-4 py-8">
+    <div className="relative flex items-center justify-center">
+      <div className="absolute w-64 h-48 border border-slate-300 dark:border-slate-700 rounded-[50%]" />
+      <div className="absolute w-44 h-32 border border-slate-300 dark:border-slate-700 rounded-[50%]" />
+
+      {/* CENTER: Cyan, bukan emas */}
+      <div className="relative z-10 w-16 h-14 bg-cyan-500 rounded-full flex items-center justify-center">
+        <span className="text-white font-extrabold text-[6px] text-center leading-tight">
+          TECH<br/>STACK
+        </span>
+      </div>
+
+      {/* ICON: Grayscale, hover baru warna cyan */}
+      {[
+        { Icon: SiHtml5, label: "HTML", pos: "-top-2 left-1/2 -translate-x-1/2" },
+        { Icon: SiTailwindcss, label: "Tailwind", pos: "top-1/2 -left-2 -translate-y-1/2" },
+        { Icon: SiNextdotjs, label: "Next.js", pos: "-bottom-2 left-1/2 -translate-x-1/2" },
+        { Icon: SiReact, label: "React", pos: "top-1/2 -right-2 -translate-y-1/2" },
+        { Icon: SiTypescript, label: "TS", pos: "top-6 right-6" },
+        { Icon: MotionLogo, label: "Motion", pos: "bottom-6 left-6" },
+      ].map((item, i) => (
+        <div key={i} className={`absolute ${item.pos} flex flex-col items-center gap-1 group`}>
+          <div className="w-12 h-9 bg-slate-100 dark:bg-slate-900 rounded-full flex items-center justify-center border border-slate-200 dark:border-slate-800 group-hover:border-cyan-500 transition">
+            <item.Icon size={16} className="text-slate-700 dark:text-slate-300 group-hover:text-cyan-500 transition" />
+          </div>
+          <span className="text-[8px] text-slate-600 dark:text-slate-400 font-medium">{item.label}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+)
 
 const DualOrbit = () => {
-    const [isMobile, setIsMobile] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false)
 
-    useEffect(() => {
-        const checkMobile = () => setIsMobile(window.innerWidth < 768);
-        checkMobile();
-        window.addEventListener('resize', checkMobile);
-        return () => window.removeEventListener('resize', checkMobile);
-    }, []);
+  useEffect(() => {
+    const checkDesktop = () => setIsDesktop(window.innerWidth >= 1024)
+    checkDesktop()
+    window.addEventListener('resize', checkDesktop)
+    return () => window.removeEventListener('resize', checkDesktop)
+  }, [])
 
-    // ✅ Scale responsif: mobile 0.6, desktop 1.2
-    const scale = isMobile? 0.55 : 1.2;
-    const orbitGap = isMobile? 30 : 50;
+  if (!isDesktop) return <StaticOrbit />
 
-    // ✅ Ball size responsif
-    const ballWidth = isMobile? 50 : 70;
-    const ballHeight = isMobile? 35 : 50;
-    const iconSize = isMobile? 18 : 25;
+  // DESKTOP: Animasi enteng, grayscale, 1 warna cyan
+  const scale = 1.2
+  const radius1X = 226 * scale
+  const radius1Y = 162 * scale
+  const radius2X = 120 * scale
+  const radius2Y = 76 * scale
 
-    const orbit1Icons = [
-        { Icon: SiHtml5, color: "#E34F26", label: "HTML" },
-        { Icon: SiTailwindcss, color: "#06B6D4", label: "Tailwind CSS" },
-        { Icon: SiNextdotjs, color: "#FFFFFF", label: "Next.js" },
-    ];
+  const orbit1Icons = [
+    { Icon: SiHtml5, label: "HTML" },
+    { Icon: SiTailwindcss, label: "Tailwind CSS" },
+    { Icon: SiNextdotjs, label: "Next.js" },
+  ]
 
-    const orbit2Icons = [
-        { Icon: SiReact, color: "#61DAFB", label: "React" },
-        { Icon: SiTypescript, color: "#3178C6", label: "TypeScript" },
-        { Icon: MotionLogo, color: "#FACC15", label: "Motion" },
-    ];
+  const orbit2Icons = [
+    { Icon: SiReact, label: "React" },
+    { Icon: SiTypescript, label: "TypeScript" },
+    { Icon: MotionLogo, label: "Motion" },
+  ]
 
-    const radius1X = (176 + orbitGap) * scale;
-    const radius1Y = (112 + orbitGap) * scale;
-    const duration1 = 20;
+  const maxRadiusY = Math.max(radius1Y, radius2Y)
 
-    const radius2X = 120 * scale;
-    const radius2Y = 76 * scale;
-    const duration2 = 15;
-
-    const maxRadiusX = Math.max(radius1X, radius2X);
-    const maxRadiusY = Math.max(radius1Y, radius2Y);
-    const containerPadding = isMobile? 40 : 100;
-
-    // ✅ Bola pusat responsif
-    const centerWidth = isMobile? 70 : 120;
-    const centerHeight = isMobile? 55 : 90;
-    const centerFontSize = isMobile? 7 : 10;
-
-    return (
+  return (
+    <div
+      className="relative flex items-center justify-center w-full overflow-visible"
+      style={{ minHeight: (maxRadiusY + 100) * 2 }}
+    >
+      <div
+        className="relative flex items-center justify-center"
+        style={{
+          width: (radius1X + 100) * 2,
+          height: (maxRadiusY + 100) * 2
+        }}
+      >
+        {/* ORBIT: Warna netral slate */}
         <div
-            className="relative flex items-center justify-center w-full dark:bg-dark/5 bg-light/5 overflow-visible" // ← ganti overflow-hidden
-            style={{ minHeight: (maxRadiusY + containerPadding) * 2 }}
+          className="absolute border border-slate-300 dark:border-slate-700 rounded-[50%]"
+          style={{ width: radius1X * 2, height: radius1Y * 2 }}
+        />
+        <div
+          className="absolute border border-slate-300 dark:border-slate-700 rounded-[50%]"
+          style={{ width: radius2X * 2, height: radius2Y * 2 }}
+        />
+
+        {/* CENTER: Cyan, bukan emas */}
+        <motion.div
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          className="relative z-10 flex items-center justify-center bg-cyan-500 shadow-lg"
+          style={{ width: 120, height: 90, borderRadius: "50%" }}
         >
-            <div
-                className="relative flex items-center justify-center"
-                style={{
-                    width: (maxRadiusX + containerPadding) * 2,
-                    height: (maxRadiusY + containerPadding) * 2
-                }}
+          <span className="text-white font-extrabold text-center tracking-widest leading-tight text-[10px]">
+            TECH<br />STACK
+          </span>
+        </motion.div>
+
+        {[...orbit1Icons,...orbit2Icons].map((item, index) => {
+          const isOrbit1 = index < 3
+          const rX = isOrbit1? radius1X : radius2X
+          const rY = isOrbit1? radius1Y : radius2Y
+          const duration = isOrbit1? 20 : 15
+          const direction = isOrbit1? 1 : -1
+          const startAngle = (index % 3 / 3) * (2 * Math.PI)
+
+          return (
+            <motion.div
+              key={index}
+              className="absolute flex flex-col items-center gap-2 group"
+              animate={{
+                x: Array.from({ length: 61 }, (_, i) =>
+                  Math.cos(startAngle + direction * (i / 60) * 2 * Math.PI) * rX
+                ),
+                y: Array.from({ length: 61 }, (_, i) =>
+                  Math.sin(startAngle + direction * (i / 60) * 2 * Math.PI) * rY
+                ),
+              }}
+              transition={{ duration, repeat: Infinity, ease: "linear" }}
             >
-                {/* Visual Panduan Orbit 1 */}
-                <div
-                    className="absolute border dark:border-white/20 border-dark/30 rounded-[50%]"
-                    style={{ width: radius1X * 2, height: radius1Y * 2 }}
-                />
+              {/* ICON: Grayscale default, hover cyan */}
+              <div className="bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 group-hover:border-cyan-500 flex items-center justify-center transition-all duration-300"
+                   style={{ width: 70, height: 50, borderRadius: "50%" }}>
+                <item.Icon size={25} className="text-slate-700 dark:text-slate-300 group-hover:text-cyan-500 transition-colors duration-300" />
+              </div>
+              <div className="bg-slate-200/60 dark:bg-slate-800/60 border border-slate-300 dark:border-slate-700 backdrop-blur-sm flex items-center justify-center px-2"
+                   style={{ width: 80, height: 24, borderRadius: "50%" }}>
+                <span className="text-slate-700 dark:text-slate-300 font-medium whitespace-nowrap text-[10px]">
+                  {item.label}
+                </span>
+              </div>
+            </motion.div>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
 
-                {/* Visual Panduan Orbit 2 */}
-                <div
-                    className="absolute border dark:border-white/20 border-dark/30 rounded-[50%]"
-                    style={{ width: radius2X * 2, height: radius2Y * 2 }}
-                />
-
-                {/* Bola Pusat */}
-                <motion.div
-                    initial={{ scale: 0, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    className="relative z-10 flex items-center justify-center bg-gradient-to-br from-yellow-400 to-yellow-900 backdrop-blur-2xl border border-white/10 shadow-[0_0_60px_rgba(56,189,248,0.3)]"
-                    style={{
-                        width: centerWidth,
-                        height: centerHeight,
-                        borderRadius: "50%"
-                    }}
-                >
-                    <span
-                        className="text-white font-extrabold text-center tracking-widest leading-tight"
-                        style={{ fontSize: centerFontSize }}
-                    >
-                        WEB<br />DEVELOPMENT
-                    </span>
-                </motion.div>
-
-                {/* Orbit 1 */}
-                {orbit1Icons.map((item, index) => {
-                    const startAngle = (index / orbit1Icons.length) * (2 * Math.PI);
-
-                    return (
-                        <motion.div
-                            key={`orbit1-${index}`}
-                            className="absolute flex flex-col items-center gap-1 md:gap-2"
-                            animate={{
-                                x: Array.from({ length: 61 }, (_, i) =>
-                                    Math.cos(startAngle + (i / 60) * 2 * Math.PI) * radius1X
-                                ),
-                                y: Array.from({ length: 61 }, (_, i) =>
-                                    Math.sin(startAngle + (i / 60) * 2 * Math.PI) * radius1Y
-                                ),
-                            }}
-                            transition={{
-                                duration: duration1,
-                                repeat: Infinity,
-                                ease: "linear",
-                            }}
-                        >
-                            <div
-                                className="bg-gray-900/90 backdrop-blur-md border border-white/10 shadow-2xl flex items-center justify-center"
-                                style={{
-                                    width: ballWidth,
-                                    height: ballHeight,
-                                    borderRadius: "50%"
-                                }}
-                            >
-                                <item.Icon size={iconSize} color={item.color} />
-                            </div>
-
-                            <div
-                                className="bg-black/60 border border-white/10 backdrop-blur-sm shadow-lg flex items-center justify-center px-2"
-                                style={{
-                                    width: ballWidth + 10,
-                                    height: isMobile? 18 : 24,
-                                    borderRadius: "50%"
-                                }}
-                            >
-                                <span
-                                    className="text-white font-bold whitespace-nowrap tracking-tighter"
-                                    style={{ fontSize: isMobile? 8 : 10 }}
-                                >
-                                    {item.label}
-                                </span>
-                            </div>
-                        </motion.div>
-                    );
-                })}
-
-                {/* Orbit 2 */}
-                {orbit2Icons.map((item, index) => {
-                    const startAngle = (index / orbit2Icons.length) * (2 * Math.PI);
-
-                    return (
-                        <motion.div
-                            key={`orbit2-${index}`}
-                            className="absolute flex flex-col items-center gap-1 md:gap-2"
-                            animate={{
-                                x: Array.from({ length: 61 }, (_, i) =>
-                                    Math.cos(startAngle - (i / 60) * 2 * Math.PI) * radius2X
-                                ),
-                                y: Array.from({ length: 61 }, (_, i) =>
-                                    Math.sin(startAngle - (i / 60) * 2 * Math.PI) * radius2Y
-                                ),
-                            }}
-                            transition={{
-                                duration: duration2,
-                                repeat: Infinity,
-                                ease: "linear",
-                            }}
-                        >
-                            <div
-                                className="bg-gray-900/90 backdrop-blur-md border border-white/10 shadow-2xl flex items-center justify-center"
-                                style={{
-                                    width: ballWidth,
-                                    height: ballHeight,
-                                    borderRadius: "50%"
-                                }}
-                            >
-                                <item.Icon size={iconSize} color={item.color} />
-                            </div>
-
-                            <div
-                                className="bg-black/60 border border-white/10 backdrop-blur-sm shadow-lg flex items-center justify-center px-2"
-                                style={{
-                                    width: ballWidth + 10,
-                                    height: isMobile? 18 : 24,
-                                    borderRadius: "50%"
-                                }}
-                            >
-                                <span
-                                    className="text-white font-bold whitespace-nowrap tracking-tighter"
-                                    style={{ fontSize: isMobile? 8 : 10 }}
-                                >
-                                    {item.label}
-                                </span>
-                            </div>
-                        </motion.div>
-                    );
-                })}
-
-            </div>
-        </div>
-    );
-};
-
-export default DualOrbit;
+export default DualOrbit
