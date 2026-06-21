@@ -25,13 +25,14 @@ const Skills = () => {
             className="w-20 h-1 bg-cyan-500 rounded-full mb-8 origin-center"
           />
 
+          {/* PERBAIKAN: mb-12 → mb-6 md:mb-4 */}
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.7, delay: 0.3 }}
             className="max-w-2xl mx-auto text-center text-base md:text-lg leading-relaxed
-                     text-slate-600 dark:text-slate-400 px-6 mb-12"
+                     text-slate-600 dark:text-slate-400 px-6 mb-6 md:mb-4"
           >
             I craft performant web applications using modern technologies — from semantic{" "}
             <span className="font-semibold text-cyan-500">HTML</span> and utility-first{" "}
@@ -46,7 +47,7 @@ const Skills = () => {
             <span className="font-bold text-slate-900 dark:text-slate-100">memorable</span>.
           </motion.p>
 
-          <div className="w-full max-w-6xl mt-8 mb-12 md:mb-10">
+          <div className="w-full max-w-6xl mt-8 mb-25 md:mb-10">
             <DualOrbit />
           </div>
 

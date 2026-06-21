@@ -1,5 +1,6 @@
 import { useEffect, useState, lazy, Suspense } from "react"
 import profilePic from "../assets/images/profile/sedakep-nobg2.webp"
+import aboutPic from "../assets/images/profile/joko_gedung2.webp" // ← IMPORT LANGSUNG
 import { motion } from "framer-motion"
 import { Typewriter2 } from "@/components/ui/Typewriter2"
 import { SimpleMagicButton } from "../components/ui/SimpleMagicButton"
@@ -24,6 +25,20 @@ export default function Home() {
 
   useEffect(() => {
     setIsMounted(true)
+  }, [])
+
+  // PERBAIKAN: Preload tanpa delay, path sudah benar
+  useEffect(() => {
+    // Preload image About (sudah di-import di atas, jadi path otomatis benar)
+    const img = new Image()
+    img.src = aboutPic
+    img.fetchPriority = 'high'
+    
+    // Preload module langsung (tanpa setTimeout)
+    import('./About')
+    import('./Education')
+    import('./Skills')
+    import('./Contact')
   }, [])
 
   return (
