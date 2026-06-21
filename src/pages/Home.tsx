@@ -26,8 +26,6 @@ export default function Home() {
     setIsMounted(true)
   }, [])
 
-  const mobileAnimationProps = isMobile? { initial: false, animate: false } : {}
-
   return (
     <section
       id="home"
@@ -48,14 +46,13 @@ export default function Home() {
 
           {/* FOTO */}
           <div className="w-full max-w-xs xs:max-w-sm sm:max-w-md lg:w-2/5 relative flex justify-center items-center order-1 lg:order-1">
-            {/* FIX: bg-dark → bg-slate-200, border-dark → border-slate-900 */}
             <div className="absolute bottom-0 w-[85%] xs:w-[90%] lg:w-full h-[65%] xs:h-[70%] rounded-2xl xs:rounded-3xl border-2 border-solid border-slate-900 bg-slate-200 dark:bg-slate-900 overflow-visible">
               <div className="absolute top-0 -right-2 xs:-right-3 -z-10 w-[102%] h-[103%] rounded-2xl xs:rounded-3xl bg-slate-900 dark:bg-slate-700" />
             </div>
 
             <motion.div
               className="relative z-10 w-[80%] xs:w-[85%] lg:w-full"
-              {...(isMobile?
+              {...(isMobile ?
                 { initial: false, animate: false } :
                 {
                   initial: { y: 30, opacity: 0 },
@@ -82,9 +79,8 @@ export default function Home() {
           {/* TEKS */}
           <div className="w-full lg:w-1/2 flex flex-col items-center text-center lg:items-start lg:text-left order-2 lg:order-2 px-2">
 
-            {/* FIX: orange/yellow → slate. Nama harus netral */}
             <motion.h1
-              {...(isMobile?
+              {...(isMobile ?
                 { initial: false, animate: false } :
                 {
                   initial: { x: 150, opacity: 0 },
@@ -97,9 +93,8 @@ export default function Home() {
               Joko Wasono
             </motion.h1>
 
-            {/* FIX: dark/70 → cyan-500. Ini 1 accent kamu */}
             <motion.h2
-              {...(isMobile?
+              {...(isMobile ?
                 { initial: false, animate: false } :
                 {
                   initial: { x: -100, opacity: 0 },
@@ -113,7 +108,7 @@ export default function Home() {
             </motion.h2>
 
             <motion.p
-              {...(isMobile?
+              {...(isMobile ?
                 { initial: false, animate: false } :
                 {
                   initial: { opacity: 0, y: 10 },
@@ -127,8 +122,7 @@ export default function Home() {
             </motion.p>
 
             <div className="flex items-center justify-center lg:justify-start gap-1 xs:gap-2 mb-6 xs:mb-8 h-6 xs:h-8 w-full">
-              {isMobile? (
-                // FIX: green → cyan. 1 warna aja
+              {isMobile ? (
                 <p className="text-base xs:text-lg sm:text-xl lg:text-2xl font-bold font-inter text-slate-700 dark:text-slate-300 break-words">
                   With <span className="text-cyan-500 font-extrabold italic">Modern Tech</span> Stack
                 </p>
@@ -155,8 +149,8 @@ export default function Home() {
               <motion.a
                 href="https://github.com/username"
                 target="_blank"
-                whileHover={isMobile? {} : { scale: 1.1 }}
-                whileTap={isMobile? {} : { scale: 0.95 }}
+                whileHover={isMobile ? {} : { scale: 1.1 }}
+                whileTap={isMobile ? {} : { scale: 0.95 }}
                 className="w-12 h-12 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-700 dark:text-slate-300 hover:bg-slate-900 hover:text-white dark:hover:bg-slate-100 dark:hover:text-slate-900 transition-all"
               >
                 <FaGithub className="w-5 h-5" />
@@ -164,8 +158,8 @@ export default function Home() {
               <motion.a
                 href="https://linkedin.com/in/username"
                 target="_blank"
-                whileHover={isMobile? {} : { scale: 1.1 }}
-                whileTap={isMobile? {} : { scale: 0.95 }}
+                whileHover={isMobile ? {} : { scale: 1.1 }}
+                whileTap={isMobile ? {} : { scale: 0.95 }}
                 className="w-12 h-12 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-700 dark:text-slate-300 hover:bg-blue-600 hover:text-white transition-all"
               >
                 <FaLinkedinIn className="w-5 h-5" />

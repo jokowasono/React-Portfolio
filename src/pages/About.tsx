@@ -47,6 +47,7 @@ const About = () => {
 
   return (
     <section id="about" className="bg-white dark:bg-slate-950 overflow-x-clip">
+      {/* hapus -mt-5 */}
       <div className='container mx-auto px-4 sm:px-6 lg:px-8 py-10'>
         <div className='mb-16 md:mb-20 flex flex-col items-center justify-center text-center text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold w-full text-slate-900 dark:text-slate-100 px-2'>
           <div className="flex flex-wrap items-center justify-center gap-2 xs:gap-3">
@@ -57,7 +58,6 @@ const About = () => {
 
         <div className='grid w-full grid-cols-1 md:grid-cols-8 gap-8 xs:gap-10 md:gap-16 relative'>
           <div className='col-span-full md:col-span-3 flex flex-col items-center md:items-start text-center md:text-left px-2 md:px-0'>
-            {/* AboutBadge: pake cyan-500 aja */}
             <AboutBadge text="About Me" className='mt-8' />
 
             <div className="space-y-4 mt-4">
@@ -101,7 +101,6 @@ const About = () => {
             className='col-span-full md:col-span-3 relative h-max rounded-2xl border-2 border-solid border-slate-900 dark:border-slate-700 bg-slate-100 dark:bg-slate-900 p-2 xs:p-3 md:p-4 mx-auto md:mx-0 w-full md:w-[80%] lg:w-[90%]'
           >
             <div className="absolute inset-0 overflow-visible">
-              {/* Shadow: ganti jadi slate-900 biar netral, ga cyan */}
               <div className='absolute top-0 -right-2 xs:-right-3 -z-10 w-[102%] h-[103%] rounded-2xl xs:rounded-3xl bg-slate-900 dark:bg-slate-700' />
             </div>
 
@@ -116,7 +115,7 @@ const About = () => {
                 width={350}
                 height={450}
                 className='w-full h-auto rounded-2xl'
-                loading="lazy"
+                loading="eager"
                 decoding="async"
               />
             </motion.div>
@@ -133,7 +132,6 @@ const About = () => {
               <span className='inline-block text-3xl xs:text-4xl md:text-4xl font-bold text-slate-900 dark:text-slate-100 mb-2'>
                 <AnimatedNumbers value={100} />%
               </span>
-              {/* FIX: Ganti orange & lime jadi cyan-500. 1 warna aja */}
               <h2 className='text-base xs:text-lg md:text-xl font-medium capitalize text-cyan-500 text-center md:text-right leading-tight'>
                 Focused on<br className="md:hidden" /> Customer Happiness
               </h2>

@@ -7,7 +7,7 @@ export function Header() {
   const { theme, setTheme } = useTheme()
   const [activeSection, setActiveSection] = useState('home')
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const isScrollingProgrammatically = useRef(false) // TAMBAH: flag
+  const isScrollingProgrammatically = useRef(false)
 
   const menuItems = [
     { id: 'home', label: 'Home' },
@@ -17,32 +17,28 @@ export function Header() {
     { id: 'contact', label: 'Contact' }
   ]
 
+  // Preload component pas hover menu
+  const handleMouseEnter = (id: string) => {
+    if (id === 'about') import('../pages/About')
+    if (id === 'education') import('../pages/Education')
+    if (id === 'skills') import('../pages/Skills')
+    if (id === 'contact') import('../pages/Contact')
+  }
+
   const scrollToSection = (id: string) => {
-  const el = document.getElementById(id)
-  const header = document.querySelector('header')
-  if (el && header) {
     isScrollingProgrammatically.current = true
     setActiveSection(id)
-
-    const headerHeight = header.offsetHeight
-    const elementPosition = el.getBoundingClientRect().top + window.scrollY - headerHeight
-
-    window.scrollTo({
-      top: Math.max(0, elementPosition), // cegah minus
-      behavior: 'smooth'
-    })
     setIsMenuOpen(false)
+    window.location.hash = id
 
     setTimeout(() => {
       isScrollingProgrammatically.current = false
-    }, 800)
+    }, 1000)
   }
-}
-
 
   useEffect(() => {
     const handleScroll = () => {
-      if (isScrollingProgrammatically.current) return // SKIP: kalo lagi scroll manual
+      if (isScrollingProgrammatically.current) return
 
       const footer = document.getElementById('footer')
       const footerHeight = footer? footer.offsetHeight : 200
@@ -55,9 +51,8 @@ export function Header() {
       const sections = menuItems.map(item => document.getElementById(item.id))
       const header = document.querySelector('header')
       const headerHeight = header? header.offsetHeight : 80
-      const scrollPosition = window.scrollY + headerHeight + 20 // offset dikit dari header
+      const scrollPosition = window.scrollY + headerHeight + 20
 
-      // GANTI: cek range, bukan cuma offsetTop
       for (let i = sections.length - 1; i >= 0; i--) {
         const section = sections[i]
         if (section) {
@@ -71,7 +66,6 @@ export function Header() {
         }
       }
 
-      // FALLBACK: kalo di paling atas banget
       if (window.scrollY < 100) {
         setActiveSection('home')
       }
@@ -103,9 +97,10 @@ export function Header() {
               <button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
+                onMouseEnter={() => handleMouseEnter(item.id)}
                 className={`transition font-medium px-4 py-2 rounded-lg ${
                   activeSection === item.id
-                   ? 'text-blue-600 dark:text-cyan-400 bg-slate-100 dark:bg-slate-800'
+                 ? 'text-blue-600 dark:text-cyan-400 bg-slate-100 dark:bg-slate-800'
                     : 'text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-cyan-400 hover:bg-slate-50 dark:hover:bg-slate-800/50'
                   }`}
               >
@@ -180,7 +175,7 @@ export function Header() {
                       transition={{ delay: index * 0.05 }}
                       onClick={() => scrollToSection(item.id)}
                       className={`text-left py-2 px-3 rounded-lg transition font-medium text-sm ${activeSection === item.id
-                       ? 'bg-gray-500 dark:bg-slate-600 text-white'
+                     ? 'bg-gray-500 dark:bg-slate-600 text-white'
                         : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'
                         }`}
                     >

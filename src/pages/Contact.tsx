@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import emailjs from '@emailjs/browser';
 import { ImHere3 } from "../components/ui/ImHere3";
-import { FaWhatsapp, FaEnvelope, FaRegClock, FaGithub, FaLinkedinIn } from 'react-icons/fa6'; // ← Import ini
+import { FaWhatsapp, FaEnvelope, FaRegClock, FaGithub, FaLinkedinIn } from 'react-icons/fa6';
 
 const Contact = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -32,11 +32,10 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="overflow-y-auto">
-      <div className="w-full py-10">
+    <section className="overflow-x-clip py-16 md:py-20">
+      <div className="w-full">
         <div className="max-w-5xl grid grid-cols-1 md:grid-cols-2 gap-16 relative z-10 container mx-auto px-4 sm:px-6 lg:px-8">
 
-          {/* Kolom Kiri: Info */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -52,7 +51,6 @@ const Contact = () => {
             </p>
 
             <div className="space-y-6">
-              {/* Email */}
               <div className="flex items-center gap-4 text-slate-700 dark:text-slate-300">
                 <div className="w-10 h-10 rounded-full bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center text-blue-600">
                   <FaEnvelope className="w-5 h-5" />
@@ -60,7 +58,6 @@ const Contact = () => {
                 <span>wasonoj@gmail.com</span>
               </div>
 
-              {/* Jam */}
               <div className="flex items-center gap-4 text-slate-700 dark:text-slate-300">
                 <div className="w-10 h-10 rounded-full bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center text-blue-600">
                   <FaRegClock className="w-5 h-5" />
@@ -71,7 +68,6 @@ const Contact = () => {
                 </div>
               </div>
 
-              {/* WhatsApp */}
               <a
                 href="https://wa.me/6289666184844"
                 target="_blank"
@@ -101,7 +97,6 @@ const Contact = () => {
             </div>
           </motion.div>
 
-          {/* Kolom Kanan: Form - sama kayak sebelumnya */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
