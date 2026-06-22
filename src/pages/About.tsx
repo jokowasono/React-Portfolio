@@ -114,8 +114,8 @@ const About = () => {
                 width={350}
                 height={450}
                 className='w-full h-auto rounded-2xl'
-                loading="eager"
-                fetchPriority="high"
+                // PERBAIKAN: Ubah jadi lazy karena posisi berada di bawah lipatan layar pertama (below fold)
+                loading="lazy" 
                 decoding="async"
               />
             </motion.div>

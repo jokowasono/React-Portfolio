@@ -1,6 +1,5 @@
 import { useEffect, useState, lazy, Suspense } from "react"
 import profilePic from "../assets/images/profile/sedakep-nobg2.webp"
-import aboutPic from "../assets/images/profile/joko_gedung2.webp" // ← IMPORT LANGSUNG
 import { motion } from "framer-motion"
 import { Typewriter2 } from "@/components/ui/Typewriter2"
 import { SimpleMagicButton } from "../components/ui/SimpleMagicButton"
@@ -20,31 +19,12 @@ const useIsMobile = () => {
 }
 
 export default function Home() {
-  const [isMounted, setIsMounted] = useState(false)
   const isMobile = useIsMobile()
-
-  useEffect(() => {
-    setIsMounted(true)
-  }, [])
-
-  // PERBAIKAN: Preload tanpa delay, path sudah benar
-  useEffect(() => {
-    // Preload image About (sudah di-import di atas, jadi path otomatis benar)
-    const img = new Image()
-    img.src = aboutPic
-    img.fetchPriority = 'high'
-    
-    // Preload module langsung (tanpa setTimeout)
-    import('./About')
-    import('./Education')
-    import('./Skills')
-    import('./Contact')
-  }, [])
 
   return (
     <section
       id="home"
-      className="bg-white dark:bg-slate-950 md:pt-24 lg:pt-28 relative"
+      className="bg-white dark:bg-slate-950 md:pt-24 lg:pt-28 relative min-h-[80vh]"
     >
       {!isMobile && (
         <Suspense fallback={null}>
@@ -84,7 +64,7 @@ export default function Home() {
                 height={500}
                 className="w-full h-auto transform scale-100 xs:scale-105 lg:scale-110 origin-bottom"
                 loading="eager"
-                fetchPriority="high"
+                fetchPriority="high" //  Benar (Menggunakan camelCase)
                 decoding="async"
                 style={{ maxWidth: '100%', height: 'auto', display: 'block' }}
               />
@@ -93,44 +73,34 @@ export default function Home() {
 
           {/* TEKS */}
           <div className="w-full lg:w-1/2 flex flex-col items-center text-center lg:items-start lg:text-left order-2 lg:order-2 px-2">
-
             <motion.h1
-              {...(isMobile ?
-                { initial: false, animate: false } :
-                {
-                  initial: { x: 150, opacity: 0 },
-                  animate: { x: 0, opacity: 1 },
-                  transition: { duration: 0.6, ease: "easeOut" }
-                }
-              )}
+              {...(isMobile ? { initial: false, animate: false } : {
+                initial: { x: 50, opacity: 0 }, // Jarak dikurangi (150px -> 50px) agar animasi GPU lebih lancar
+                animate: { x: 0, opacity: 1 },
+                transition: { duration: 0.5, ease: "easeOut" }
+              })}
               className="text-3xl xs:text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 dark:text-slate-100 break-words leading-tight"
             >
               Joko Wasono
             </motion.h1>
 
             <motion.h2
-              {...(isMobile ?
-                { initial: false, animate: false } :
-                {
-                  initial: { x: -100, opacity: 0 },
-                  animate: { x: 0, opacity: 1 },
-                  transition: { duration: 0.6, delay: 0.1, ease: "easeOut" }
-                }
-              )}
+              {...(isMobile ? { initial: false, animate: false } : {
+                initial: { x: -50, opacity: 0 },
+                animate: { x: 0, opacity: 1 },
+                transition: { duration: 0.5, delay: 0.1, ease: "easeOut" }
+              })}
               className="text-xl xs:text-2xl sm:text-3xl lg:text-3xl font-semibold text-cyan-500 mt-2 break-words"
             >
               Frontend Developer
             </motion.h2>
 
             <motion.p
-              {...(isMobile ?
-                { initial: false, animate: false } :
-                {
-                  initial: { opacity: 0, y: 10 },
-                  animate: { opacity: 1, y: 0 },
-                  transition: { duration: 0.6, delay: 0.2, ease: "easeOut" }
-                }
-              )}
+              {...(isMobile ? { initial: false, animate: false } : {
+                initial: { opacity: 0, y: 10 },
+                animate: { opacity: 1, y: 0 },
+                transition: { duration: 0.5, delay: 0.2, ease: "easeOut" }
+              })}
               className="my-4 lg:mb-10 xs:my-6 text-sm xs:text-base sm:text-lg text-slate-600 dark:text-slate-400 max-w-xs xs:max-w-sm sm:max-w-xl break-words leading-relaxed"
             >
               A dedicated Frontend Developer focused on transforming creative ideas into high-performance, innovative web applications.

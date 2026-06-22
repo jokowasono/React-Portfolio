@@ -8,12 +8,6 @@ const Education = lazy(() => import('./pages/Education'))
 const Skills = lazy(() => import('./pages/Skills'))
 const Contact = lazy(() => import('./pages/Contact'))
 
-// Preload semua komponen di luar component agar dimulai secepat mungkin
-const preloadAbout = import('./pages/About')
-const preloadEducation = import('./pages/Education')
-const preloadSkills = import('./pages/Skills')
-const preloadContact = import('./pages/Contact')
-
 function LazySection({
   children,
   id,
@@ -39,6 +33,7 @@ function LazySection({
       return
     }
 
+    // Menggunakan rootMargin 600px agar konten di-load sedikit lebih awal sebelum terlihat
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -46,61 +41,29 @@ function LazySection({
           observer.disconnect()
         }
       },
-      { rootMargin: '400px' }
+      { rootMargin: '600px' }
     )
 
     if (ref.current) observer.observe(ref.current)
     return () => observer.disconnect()
   }, [id, forceLoad])
 
-  // Tunggu sampai konten ASLI muncul (bukan Suspense fallback)
+  // Dipanggil langsung saat component mulai di-render untuk mengizinkan smooth-scroll berjalan lancar
   useEffect(() => {
-    if (!shouldRender || !ref.current || !onReady) return
-
-    let resolved = false
-
-    const checkReady = () => {
-      if (resolved) return true
-      const hasContent = ref.current?.querySelector('section')
-      if (hasContent) {
-        resolved = true
-        requestAnimationFrame(() => onReady(id))
-        return true
-      }
-      return false
-    }
-
-    // Cek langsung (kalau sudah cached, langsung ready)
-    if (checkReady()) return
-
-    // Kalau belum, observe DOM sampai konten muncul
-    const observer = new MutationObserver(() => {
-      if (checkReady()) observer.disconnect()
-    })
-
-    observer.observe(ref.current, { childList: true, subtree: true })
-
-    const timeout = setTimeout(() => {
-      observer.disconnect()
-      // Fallback: tetap scroll walau konten belum terdeteksi
-      if (!resolved) {
-        resolved = true
+    if (shouldRender && onReady) {
+      const timeout = setTimeout(() => {
         onReady(id)
-      }
-    }, 3000)
-
-    return () => {
-      observer.disconnect()
-      clearTimeout(timeout)
+      }, 100) // Berikan jeda singkat untuk transisi layout awal
+      return () => clearTimeout(timeout)
     }
   }, [shouldRender, id, onReady])
 
   return (
-    <div ref={ref} id={id} className="w-full">
+    <div ref={ref} id={id} className="w-full min-h-[40vh]">
       {shouldRender ? (
         <Suspense
           fallback={
-            <div className="w-full flex items-center justify-center" style={{ minHeight: '100vh' }}>
+            <div className="w-full flex items-center justify-center min-h-[40vh]">
               <div className="animate-pulse p-8 container mx-auto w-full">
                 <div className="h-8 bg-slate-200 dark:bg-slate-800 rounded w-1/3 mb-6"></div>
                 <div className="space-y-3">
@@ -114,15 +77,7 @@ function LazySection({
           {children}
         </Suspense>
       ) : (
-        <div className="w-full flex items-center justify-center" style={{ minHeight: '50vh' }}>
-          <div className="animate-pulse p-8 container mx-auto w-full">
-            <div className="h-8 bg-slate-200 dark:bg-slate-800 rounded w-1/3 mb-6"></div>
-            <div className="space-y-3">
-              <div className="h-4 bg-slate-200 dark:bg-slate-800 rounded w-full"></div>
-              <div className="h-4 bg-slate-200 dark:bg-slate-800 rounded w-5/6"></div>
-            </div>
-          </div>
-        </div>
+        <div className="w-full" />
       )}
     </div>
   )
@@ -138,7 +93,6 @@ export default function Layout() {
 
     const header = document.querySelector('header')
     const headerHeight = header ? header.offsetHeight : 0
-
     const elementPosition = el.getBoundingClientRect().top
     const offsetPosition = elementPosition + window.pageYOffset - headerHeight
 
@@ -151,7 +105,6 @@ export default function Layout() {
   const handleSectionReady = useCallback((id: string) => {
     if (pendingScrollRef.current === id) {
       pendingScrollRef.current = null
-      // Tunggu 1 frame agar layout stabil
       requestAnimationFrame(() => {
         performScroll(id)
       })
@@ -165,16 +118,7 @@ export default function Layout() {
 
       pendingScrollRef.current = hash
       setForceLoad(true)
-
-      // Cek apakah sudah ready (sudah pernah di-load sebelumnya)
-      setTimeout(() => {
-        const el = document.getElementById(hash)
-        if (el?.querySelector('section')) {
-          pendingScrollRef.current = null
-          performScroll(hash)
-        }
-        // Kalau belum, handleSectionReady yang akan handle
-      }, 50)
+      performScroll(hash)
     }
 
     window.addEventListener('hashchange', handleHashChange)
@@ -183,13 +127,7 @@ export default function Layout() {
       const hash = window.location.hash.slice(1)
       pendingScrollRef.current = hash
       setForceLoad(true)
-      setTimeout(() => {
-        const el = document.getElementById(hash)
-        if (el?.querySelector('section')) {
-          pendingScrollRef.current = null
-          performScroll(hash)
-        }
-      }, 300)
+      setTimeout(() => performScroll(hash), 100)
     }
 
     return () => window.removeEventListener('hashchange', handleHashChange)
