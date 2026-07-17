@@ -125,7 +125,7 @@ export default function Home() {
             </div>
 
             <div className="flex items-center justify-center lg:justify-start">
-              <a href="/CV_Joko_Wasono_Frontend_Remote.pdf" target="_blank" download={true} className="group">
+              <a href="/CV_Joko_Wasono_Frontend_Remote_Projects.pdf" target="_blank" download={true} className="group">
                 <SimpleMagicButton />
               </a>
             </div>
