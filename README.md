@@ -10,7 +10,7 @@ Welcome to my personal portfolio website repository! Built with **React.js**, **
 - **Library**: [React.js](https://react.dev/)
 - **Styling:** [Tailwind CSS](https://tailwindcss.com/)
 - **Animations:** [Motion](https://motion.dev/) (formerly Framer Motion)
-- **Language:** [TypeScript] (https://www.typescriptlang.org/)
+- **Language:** [TypeScript](https://www.typescriptlang.org/)
 - **Deployment:** [Vercel](https://vercel.com/)
 
 ---
