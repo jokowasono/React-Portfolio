@@ -28,7 +28,7 @@ Welcome to my personal portfolio website repository! Built with **React.js**, **
 
 ```text
 react-portfolio/
-├── public/                        # Aset statis publik
+├── public/                        
 │   ├── cv_joko_frontend.pdf
 │   ├── favicon.svg
 │   ├── icons.svg
@@ -49,7 +49,7 @@ react-portfolio/
 ├── index.html
 ├── package.json
 ├── package-lock.json
-├── README.md               # Project documentation
+├── README.md               
 ├── tsconfig.app.json
 ├── tsconfig.json
 ├── tsconfig.node.json
