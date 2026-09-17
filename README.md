@@ -7,8 +7,7 @@ Welcome to my personal portfolio website repository! Built with **React.js**, **
 ---
 
 ## 🛠️ Tech Stack
-
-- **Framework:** React.js
+- **Library**: [React.js](https://react.dev/)
 - **Styling:** [Tailwind CSS](https://tailwindcss.com/)
 - **Animations:** [Motion](https://motion.dev/) (formerly Framer Motion)
 - **Language:** TypeScript
@@ -28,10 +27,30 @@ Welcome to my personal portfolio website repository! Built with **React.js**, **
 ## 📂 Project Structure
 
 ```text
+react-portfolio/
+├── public/                        # Aset statis publik
+│   ├── cv_joko_frontend.pdf
+│   ├── favicon.svg
+│   ├── icons.svg
+│   └── map6.png
 ├── src/
-│   ├── app/           # Next.js App Router pages & layouts
-│   ├── components/    # Reusable UI components
-│   ├── data/          # Static project & skill data
-│   └── styles/        # Global styles and Tailwind configuration
-├── public/            # Static assets (images, icons)
-└── README.md
+│   ├── assets/
+│   ├── components/
+│   ├── lib/
+│   ├── pages/
+│   ├── App.css
+│   ├── App.tsx
+│   ├── globals.css
+│   ├── index.css
+│   ├── Layout.tsx
+│   ├── main.tsx
+│   └── vite-env.d.ts
+├── eslint.config.js
+├── index.html
+├── package.json
+├── package-lock.json
+├── README.md               # Project documentation
+├── tsconfig.app.json
+├── tsconfig.json
+├── tsconfig.node.json
+└── vite.config.ts
