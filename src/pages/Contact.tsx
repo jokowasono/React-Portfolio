@@ -19,13 +19,22 @@ const Contact = () => {
         import.meta.env.VITE_EMAILJS_SERVICE_ID,
         import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
         formRef.current,
-        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+        {
+          publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
+        }
       );
       setIsSubmitted(true);
       formRef.current.reset();
     } catch (error: any) {
-      console.error('FAILED...', error);
-      alert(`Gagal kirim: ${error.text || error.message || 'Unknown error'}`);
+      console.error("EMAILJS ERROR:", error);
+      console.error("STATUS:", error?.status);
+      console.error("TEXT:", error?.text);
+      console.error("MESSAGE:", error?.message);
+
+      alert(
+        `Gagal kirim\nStatus: ${error?.status ?? "N/A"}\nError: ${error?.text || error?.message || "Unknown error"
+        }`
+      );
     } finally {
       setIsLoading(false);
     }
